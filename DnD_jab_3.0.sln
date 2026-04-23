@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet10BE", "Backend\dotnet10BE\dotnet10BE.csproj", "{FAAA5D96-DCD9-C669-529A-9352EFE221F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAAA5D96-DCD9-C669-529A-9352EFE221F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAAA5D96-DCD9-C669-529A-9352EFE221F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAAA5D96-DCD9-C669-529A-9352EFE221F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAAA5D96-DCD9-C669-529A-9352EFE221F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FAAA5D96-DCD9-C669-529A-9352EFE221F0} = {1AE8ACA6-933B-BF2A-3671-3E2EAC007D16}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7A4667C-3591-4F9B-892B-44E62F707424}
+	EndGlobalSection
+EndGlobal
