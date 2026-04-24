@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import OptionCard from "./OptionCard.vue";
 
-const props = defineProps<{
-  race: any;
-  subraces: [string, any][];
+defineProps<{
+  subclasses: [string, any][];
   selected: string | null;
 }>();
 
-const emit = defineEmits(["back", "select", "next"]);
+const emit = defineEmits(["select", "back", "next"]);
 </script>
 
 <template>
   <div>
     <button @click="$emit('back')" class="mb-4 underline">← Back</button>
 
-    <h1 class="text-3xl mb-4">Select Subrace</h1>
+    <h1 class="text-3xl mb-4">Select Subclass</h1>
 
-    <!-- 🔥 ไม่มี subrace -->
-    <div v-if="subraces.length === 0">
+    <!-- 🔥 ไม่มี subclass -->
+    <div v-if="subclasses.length === 0">
       <p class="mb-4 text-gray-500">
-        ยังไม่มี SubRace สำหรับเผ่านี้ กรุณากด Next เพื่อไปต่อ
+        ยังไม่มี Subclass สำหรับคลาสนี้ กรุณากด Next เพื่อไปต่อ
       </p>
 
       <button
@@ -30,20 +29,19 @@ const emit = defineEmits(["back", "select", "next"]);
       </button>
     </div>
 
-    <!-- 🔥 มี subrace -->
+    <!-- 🔥 มี subclass -->
     <div v-else>
       <div class="grid grid-cols-2 gap-4">
         <OptionCard
-          v-for="[key, sub] in subraces"
+          v-for="[key] in subclasses"
           :key="key"
           :title="key"
-          :description="sub.features?.slice(0, 2).join(', ')"
           :active="selected === key"
           @click="$emit('select', key)"
         />
       </div>
 
-      <!-- ต้องเลือกก่อนถึงไปต่อ -->
+      <!-- ต้องเลือกก่อน -->
       <button
         v-if="selected"
         @click="$emit('next')"
