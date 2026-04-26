@@ -1,16 +1,19 @@
 import { ref, computed } from "vue";
+
 import RACES from "../mockup/race.json";
 import CLASSES from "../mockup/classes.json";
 import ALIGNMENTS from "../mockup/alignments.json";
 import ITEMS from "../mockup/items.json";
+
+import { useCharacterNavigation } from "./character/useCharacterNevigation";
 
 type Step =
   | "race"
   | "subrace"
   | "classes"
   | "subclass"
-  | "alignment"
-  | "startitem";
+  | "startitem"
+  | "alignment";
 
 export function useCharacterFlow() {
   const step = ref<Step>("race");
@@ -22,8 +25,7 @@ export function useCharacterFlow() {
   const selectedSubclassKey = ref<string | null>(null);
   const selectedAlignmentKey = ref<string | null>(null);
 
-  // 🔥 NEW
-  const selectedLoadoutKey = ref<string | null>(null);
+  const selectedLoadout = ref<Record<string, string>>({});
 
   // ===== DATA =====
   const raceData = RACES as Record<string, any>;
@@ -53,57 +55,60 @@ export function useCharacterFlow() {
   // ===== SUB LIST =====
   const subraceList = computed(() => {
     if (!selectedRace.value) return [];
-
     const sub = selectedRace.value.subRaces;
-
-    if (
-      !sub ||
-      (Array.isArray(sub) && sub.length === 0) ||
-      (!Array.isArray(sub) && Object.keys(sub).length === 0)
-    ) {
-      return [];
-    }
-
+    if (!sub) return [];
     return Array.isArray(sub) ? [] : Object.entries(sub);
   });
 
   const subClassList = computed<[string, any][]>(() => {
     if (!selectedClass.value) return [];
-
     const sub = selectedClass.value.subClasses;
+    if (!sub) return [];
 
-    if (
-      !sub ||
-      (Array.isArray(sub) && sub.length === 0) ||
-      (!Array.isArray(sub) && Object.keys(sub).length === 0)
-    ) {
-      return [];
-    }
-
-    if (Array.isArray(sub)) {
-      return sub.map((name: string) => [name, {}]);
-    }
-
-    return Object.entries(sub) as [string, any][];
+    return Array.isArray(sub)
+      ? sub.map((name: string) => [name, {}])
+      : Object.entries(sub);
   });
 
-  // ===== 🔥 STARTING LOADOUT =====
+  // ===== ✅ STARTING LOADOUT (FIXED) =====
   const startingLoadoutList = computed<[string, any][]>(() => {
-    if (!selectedClass.value) return [];
+    console.log("===== LOADOUT DEBUG =====");
+    console.log("selectedClass:", selectedClass.value);
 
-    const loadout = selectedClass.value.base?.startingLoadout;
+    const loadout =
+      selectedClass.value.base?.startingEquipment ??
+      selectedClass.value.base?.startingLoadout;
 
-    if (!loadout) return [];
+    console.log("resolved loadout:", loadout);
 
-    return Object.entries(loadout).map(([key, itemIds]) => [
-      key,
-      {
-        items: itemIds.map((id: string) => itemData[id] || { id }),
-      },
-    ]);
+    const result: [string, any][] = Object.entries(loadout).map(
+      ([key, group]: [string, any]) => {
+        const options = (group.options || []).map((opt: any) => {
+          const item = itemData[opt.itemId];
+
+          return {
+            ...opt,
+            item: item || {
+              id: opt.itemId,
+              name: opt.itemId,
+            },
+          };
+        });
+
+        return [
+          key,
+          {
+            choose: group.choose,
+            options,
+          },
+        ];
+      }
+    );
+    
+    return result;
   });
 
-  // ===== SELECT FUNCTIONS =====
+  // ===== ACTIONS =====
   function selectRace(key: string) {
     selectedRaceKey.value = key;
     selectedSubraceKey.value = null;
@@ -116,7 +121,7 @@ export function useCharacterFlow() {
   function selectClass(key: string) {
     selectedClassKey.value = key;
     selectedSubclassKey.value = null;
-    selectedLoadoutKey.value = null; // reset
+    selectedLoadout.value = {};
   }
 
   function selectSubclass(key: string) {
@@ -127,79 +132,23 @@ export function useCharacterFlow() {
     selectedAlignmentKey.value = key;
   }
 
-  function selectLoadout(key: string) {
-    selectedLoadoutKey.value = key;
+  function selectLoadout(groupKey: string, itemId: string) {
+    selectedLoadout.value[groupKey] = itemId;
   }
 
-  // ===== NEXT =====
-  function next() {
-    if (step.value === "race") {
-      if (!selectedRace.value) return;
-      step.value = "subrace";
-      return;
-    }
-
-    if (step.value === "subrace") {
-      if (subraceList.value.length > 0 && !selectedSubraceKey.value) return;
-      step.value = "classes";
-      return;
-    }
-
-    if (step.value === "classes") {
-      if (!selectedClass.value) return;
-      step.value = "subclass";
-      return;
-    }
-
-    if (step.value === "subclass") {
-      if (subClassList.value.length > 0 && !selectedSubclassKey.value) return;
-      step.value = "alignment";
-      return;
-    }
-
-    if (step.value === "alignment") {
-      if (!selectedAlignment.value) return;
-      step.value = "startitem"; // 🔥 ไป step ใหม่
-      return;
-    }
-
-    if (step.value === "startitem") {
-      if (startingLoadoutList.value.length > 0 && !selectedLoadoutKey.value) {
-        return;
-      }
-
-      // 🔥 future: summary
-      return;
-    }
-  }
-
-  // ===== BACK =====
-  function back() {
-    if (step.value === "subrace") {
-      step.value = "race";
-      return;
-    }
-
-    if (step.value === "classes") {
-      step.value = "subrace";
-      return;
-    }
-
-    if (step.value === "subclass") {
-      step.value = "classes";
-      return;
-    }
-
-    if (step.value === "alignment") {
-      step.value = "subclass";
-      return;
-    }
-
-    if (step.value === "startitem") {
-      step.value = "alignment";
-      return;
-    }
-  }
+  // ===== NAVIGATION =====
+  const { next, back } = useCharacterNavigation({
+    step,
+    selectedRace,
+    selectedSubraceKey,
+    subraceList,
+    selectedClass,
+    selectedSubclassKey,
+    subClassList,
+    startingLoadoutList,
+    selectedLoadout,
+    selectedAlignment,
+  });
 
   return {
     step,
@@ -221,7 +170,7 @@ export function useCharacterFlow() {
     selectedAlignment,
 
     startingLoadoutList,
-    selectedLoadoutKey,
+    selectedLoadout,
 
     selectRace,
     selectSubrace,

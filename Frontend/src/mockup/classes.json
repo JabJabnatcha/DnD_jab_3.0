@@ -3,8 +3,7 @@
     "base": {
       "PrimaryStat": "Strength",
       "HitDie": 12,
-
-      "startingEquipment": {
+      "startingLoadout": {
         "A": {
           "choose": 1,
           "options": [
@@ -21,9 +20,7 @@
         },
         "C": {
           "choose": 1,
-          "options": [
-            { "itemId": "pack_explorer", "qty": 1 }
-          ]
+          "options": [{ "itemId": "pack_explorer", "qty": 1 }]
         }
       }
     },
@@ -34,8 +31,7 @@
     "base": {
       "PrimaryStat": "Charisma",
       "HitDie": 8,
-
-      "startingEquipment": {
+      "startingLoadout": {
         "A": {
           "choose": 1,
           "options": [
@@ -55,12 +51,77 @@
     "subClasses": ["College of Lore", "College of Valor"]
   },
 
+  "Cleric": {
+    "base": {
+      "PrimaryStat": "Wisdom",
+      "HitDie": 8,
+      "startingLoadout": {
+        "A": {
+          "choose": 1,
+          "options": [
+            { "itemId": "weapon_mace", "qty": 1 },
+            { "itemId": "weapon_warhammer", "qty": 1 }
+          ]
+        },
+        "B": {
+          "choose": 1,
+          "options": [
+            { "itemId": "armor_scale_mail", "qty": 1 },
+            { "itemId": "armor_leather", "qty": 1 }
+          ]
+        },
+        "C": {
+          "choose": 1,
+          "options": [
+            { "itemId": "weapon_crossbow_light", "qty": 1 },
+            { "itemId": "weapon_sling", "qty": 1 }
+          ]
+        },
+        "D": {
+          "choose": 1,
+          "options": [
+            { "itemId": "pack_priest", "qty": 1 },
+            { "itemId": "pack_explorer", "qty": 1 }
+          ]
+        },
+        "E": {
+          "choose": 1,
+          "options": [{ "itemId": "shield_basic", "qty": 1 }]
+        }
+      }
+    },
+    "subClasses": ["Life Domain", "Light Domain"]
+  },
+
+  "Druid": {
+    "base": {
+      "PrimaryStat": "Wisdom",
+      "HitDie": 8,
+      "startingLoadout": {
+        "A": {
+          "choose": 1,
+          "options": [
+            { "itemId": "weapon_scimitar", "qty": 1 },
+            { "itemId": "weapon_quarterstaff", "qty": 1 }
+          ]
+        },
+        "B": {
+          "choose": 1,
+          "options": [
+            { "itemId": "pack_explorer", "qty": 1 },
+            { "itemId": "focus_druidic", "qty": 1 }
+          ]
+        }
+      }
+    },
+    "subClasses": ["Circle of the Land", "Circle of the Moon"]
+  },
+
   "Fighter": {
     "base": {
       "PrimaryStat": "Strength or Dexterity",
       "HitDie": 10,
-
-      "startingEquipment": {
+      "startingLoadout": {
         "A": {
           "choose": 1,
           "options": [
@@ -87,12 +148,98 @@
     "subClasses": ["Champion", "Battle Master"]
   },
 
+  "Monk": {
+    "base": {
+      "PrimaryStat": "Dexterity and Wisdom",
+      "HitDie": 8,
+      "startingLoadout": {
+        "A": {
+          "choose": 1,
+          "options": [
+            { "itemId": "weapon_shortsword", "qty": 1 },
+            { "itemId": "weapon_dagger", "qty": 1 }
+          ]
+        },
+        "B": {
+          "choose": 1,
+          "options": [
+            { "itemId": "pack_dungeoneer", "qty": 1 },
+            { "itemId": "pack_explorer", "qty": 1 }
+          ]
+        }
+      }
+    },
+    "subClasses": ["Way of the Open Hand", "Way of Shadow"]
+  },
+
+  "Paladin": {
+    "base": {
+      "PrimaryStat": "Strength and Charisma",
+      "HitDie": 10,
+      "startingLoadout": {
+        "A": {
+          "choose": 1,
+          "options": [
+            { "itemId": "weapon_warhammer", "qty": 1 },
+            { "itemId": "weapon_greataxe", "qty": 1 }
+          ]
+        },
+        "B": {
+          "choose": 1,
+          "options": [{ "itemId": "shield_basic", "qty": 1 }]
+        },
+        "C": {
+          "choose": 1,
+          "options": [{ "itemId": "weapon_javelin", "qty": 5 }]
+        },
+        "D": {
+          "choose": 1,
+          "options": [
+            { "itemId": "pack_priest", "qty": 1 },
+            { "itemId": "pack_explorer", "qty": 1 }
+          ]
+        }
+      }
+    },
+    "subClasses": ["Oath of Devotion", "Oath of the Ancients"]
+  },
+
+  "Ranger": {
+    "base": {
+      "PrimaryStat": "Dexterity and Wisdom",
+      "HitDie": 10,
+      "startingLoadout": {
+        "A": {
+          "choose": 1,
+          "options": [
+            { "itemId": "armor_scale_mail", "qty": 1 },
+            { "itemId": "armor_leather", "qty": 1 }
+          ]
+        },
+        "B": {
+          "choose": 1,
+          "options": [
+            { "itemId": "weapon_shortsword", "qty": 2 },
+            { "itemId": "weapon_dagger", "qty": 2 }
+          ]
+        },
+        "C": {
+          "choose": 1,
+          "options": [
+            { "itemId": "pack_dungeoneer", "qty": 1 },
+            { "itemId": "pack_explorer", "qty": 1 }
+          ]
+        }
+      }
+    },
+    "subClasses": ["Hunter", "Beast Master"]
+  },
+
   "Rogue": {
     "base": {
       "PrimaryStat": "Dexterity",
       "HitDie": 8,
-
-      "startingEquipment": {
+      "startingLoadout": {
         "A": {
           "choose": 1,
           "options": [
@@ -109,12 +256,69 @@
         },
         "C": {
           "choose": 1,
-          "options": [
-            { "itemId": "tool_thieves_tools", "qty": 1 }
-          ]
+          "options": [{ "itemId": "tool_thieves_tools", "qty": 1 }]
         }
       }
     },
     "subClasses": ["Thief", "Assassin"]
+  },
+
+  "Sorcerer": {
+    "base": {
+      "PrimaryStat": "Charisma",
+      "HitDie": 6,
+      "startingLoadout": {
+        "A": {
+          "choose": 1,
+          "options": [
+            { "itemId": "weapon_quarterstaff", "qty": 1 },
+            { "itemId": "weapon_dagger", "qty": 1 }
+          ]
+        },
+        "B": {
+          "choose": 1,
+          "options": [
+            { "itemId": "focus_component_pouch", "qty": 1 },
+            { "itemId": "focus_arcane", "qty": 1 }
+          ]
+        },
+        "C": {
+          "choose": 1,
+          "options": [
+            { "itemId": "pack_dungeoneer", "qty": 1 },
+            { "itemId": "pack_explorer", "qty": 1 }
+          ]
+        }
+      }
+    },
+    "subClasses": ["Draconic Bloodline", "Wild Magic"]
+  },
+
+  "Wizard": {
+    "base": {
+      "PrimaryStat": "Intelligence",
+      "HitDie": 6,
+      "startingLoadout": {
+        "A": {
+          "choose": 1,
+          "options": [
+            { "itemId": "weapon_quarterstaff", "qty": 1 },
+            { "itemId": "weapon_dagger", "qty": 1 }
+          ]
+        },
+        "B": {
+          "choose": 1,
+          "options": [
+            { "itemId": "focus_component_pouch", "qty": 1 },
+            { "itemId": "spellbook", "qty": 1 }
+          ]
+        },
+        "C": {
+          "choose": 1,
+          "options": [{ "itemId": "pack_explorer", "qty": 1 }]
+        }
+      }
+    },
+    "subClasses": ["Evocation", "Necromancy"]
   }
 }

@@ -6,6 +6,7 @@ import SubraceStep from "../components/SubRaceStep.vue";
 import ClassesStep from "../components/ClassesStep.vue";
 import SubclassesStep from "../components/SubClassesStep.vue";
 import AlignmentStep from "../components/AlignmentStep.vue";
+import StartingLoadoutStep from "../components/StartingLoadoutStep.vue";
 
 const flow = useCharacterFlow();
 </script>
@@ -60,6 +61,16 @@ const flow = useCharacterFlow();
       :alignments="flow.alignmentList.value"
       :selected="flow.selectedAlignmentKey.value"
       @select="flow.selectAlignment"
+      @back="flow.back"
+      @next="flow.next"
+    />
+
+    <!-- STARTING LOADOUT -->
+    <StartingLoadoutStep
+      v-else-if="flow.step.value === 'startitem'"
+      :loadouts="flow.startingLoadoutList.value"
+      :selected="flow.selectedLoadout.value"
+      @select="flow.selectLoadout"
       @back="flow.back"
       @next="flow.next"
     />

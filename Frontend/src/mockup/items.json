@@ -1,32 +1,11 @@
 {
-  "weapon_greataxe": {
-    "id": "weapon_greataxe",
-    "name": "Greataxe",
-    "type": "weapon",
-    "category": "martial",
-    "damage": { "dice": "1d12", "type": "slashing" },
-    "properties": ["heavy", "two-handed"],
-    "weight": 7
-  },
-  "weapon_handaxe": {
-    "id": "weapon_handaxe",
-    "name": "Handaxe",
+  "weapon_club": {
+    "id": "weapon_club",
+    "name": "Club",
     "type": "weapon",
     "category": "simple",
-    "damage": { "dice": "1d6", "type": "slashing" },
-    "properties": ["light", "thrown"],
-    "range": { "normal": 20, "max": 60 },
-    "weight": 2
-  },
-  "weapon_javelin": {
-    "id": "weapon_javelin",
-    "name": "Javelin",
-    "type": "weapon",
-    "category": "simple",
-    "damage": { "dice": "1d6", "type": "piercing" },
-    "properties": ["thrown"],
-    "range": { "normal": 30, "max": 120 },
-    "weight": 2
+    "damage": { "dice": "1d4", "type": "bludgeoning" },
+    "properties": ["light"]
   },
   "weapon_dagger": {
     "id": "weapon_dagger",
@@ -37,6 +16,55 @@
     "properties": ["light", "finesse", "thrown"],
     "range": { "normal": 20, "max": 60 }
   },
+  "weapon_greataxe": {
+    "id": "weapon_greataxe",
+    "name": "Greataxe",
+    "type": "weapon",
+    "category": "martial",
+    "damage": { "dice": "1d12", "type": "slashing" },
+    "properties": ["heavy", "two-handed"]
+  },
+  "weapon_handaxe": {
+    "id": "weapon_handaxe",
+    "name": "Handaxe",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d6", "type": "slashing" },
+    "properties": ["light", "thrown"],
+    "range": { "normal": 20, "max": 60 }
+  },
+  "weapon_javelin": {
+    "id": "weapon_javelin",
+    "name": "Javelin",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d6", "type": "piercing" },
+    "properties": ["thrown"],
+    "range": { "normal": 30, "max": 120 }
+  },
+  "weapon_mace": {
+    "id": "weapon_mace",
+    "name": "Mace",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d6", "type": "bludgeoning" }
+  },
+  "weapon_quarterstaff": {
+    "id": "weapon_quarterstaff",
+    "name": "Quarterstaff",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d6", "type": "bludgeoning" },
+    "properties": ["versatile"]
+  },
+  "weapon_scimitar": {
+    "id": "weapon_scimitar",
+    "name": "Scimitar",
+    "type": "weapon",
+    "category": "martial",
+    "damage": { "dice": "1d6", "type": "slashing" },
+    "properties": ["finesse", "light"]
+  },
   "weapon_rapier": {
     "id": "weapon_rapier",
     "name": "Rapier",
@@ -45,7 +73,59 @@
     "damage": { "dice": "1d8", "type": "piercing" },
     "properties": ["finesse"]
   },
+  "weapon_shortsword": {
+    "id": "weapon_shortsword",
+    "name": "Shortsword",
+    "type": "weapon",
+    "category": "martial",
+    "damage": { "dice": "1d6", "type": "piercing" },
+    "properties": ["finesse", "light"]
+  },
+  "weapon_warhammer": {
+    "id": "weapon_warhammer",
+    "name": "Warhammer",
+    "type": "weapon",
+    "category": "martial",
+    "damage": { "dice": "1d8", "type": "bludgeoning" },
+    "properties": ["versatile"]
+  },
+  "weapon_crossbow_light": {
+    "id": "weapon_crossbow_light",
+    "name": "Light Crossbow",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d8", "type": "piercing" },
+    "range": { "normal": 80, "max": 320 },
+    "properties": ["loading", "two-handed"]
+  },
+  "weapon_shortbow": {
+    "id": "weapon_shortbow",
+    "name": "Shortbow",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d6", "type": "piercing" },
+    "range": { "normal": 80, "max": 320 },
+    "properties": ["two-handed"]
+  },
+  "weapon_sling": {
+    "id": "weapon_sling",
+    "name": "Sling",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d4", "type": "bludgeoning" },
+    "range": { "normal": 30, "max": 120 }
+  },
 
+  "ammo_arrow": {
+    "id": "ammo_arrow",
+    "name": "Arrows (20)",
+    "type": "ammo"
+  },
+  "ammo_bolt": {
+    "id": "ammo_bolt",
+    "name": "Bolts (20)",
+    "type": "ammo"
+  },
   "armor_leather": {
     "id": "armor_leather",
     "name": "Leather Armor",
@@ -54,15 +134,22 @@
     "ac": 11,
     "dexBonus": true
   },
+  "armor_scale_mail": {
+    "id": "armor_scale_mail",
+    "name": "Scale Mail",
+    "type": "armor",
+    "category": "medium",
+    "ac": 14,
+    "dexBonus": true,
+    "dexCap": 2
+  },
   "armor_chain_mail": {
     "id": "armor_chain_mail",
     "name": "Chain Mail",
     "type": "armor",
     "category": "heavy",
     "ac": 16,
-    "dexBonus": false,
-    "strRequirement": 13,
-    "stealthDisadvantage": true
+    "dexBonus": false
   },
 
   "shield_basic": {
@@ -83,6 +170,16 @@
     "name": "Dungeoneer's Pack",
     "type": "gear"
   },
+  "pack_priest": {
+    "id": "pack_priest",
+    "name": "Priest's Pack",
+    "type": "gear"
+  },
+  "pack_burglar": {
+    "id": "pack_burglar",
+    "name": "Burglar's Pack",
+    "type": "gear"
+  },
 
   "tool_lute": {
     "id": "tool_lute",
@@ -93,5 +190,27 @@
     "id": "tool_thieves_tools",
     "name": "Thieves' Tools",
     "type": "tool"
+  },
+
+  "focus_arcane": {
+    "id": "focus_arcane",
+    "name": "Arcane Focus",
+    "type": "focus"
+  },
+  "focus_component_pouch": {
+    "id": "focus_component_pouch",
+    "name": "Component Pouch",
+    "type": "focus"
+  },
+  "focus_druidic": {
+    "id": "focus_druidic",
+    "name": "Druidic Focus",
+    "type": "focus"
+  },
+
+  "spellbook": {
+    "id": "spellbook",
+    "name": "Spellbook",
+    "type": "gear"
   }
 }
