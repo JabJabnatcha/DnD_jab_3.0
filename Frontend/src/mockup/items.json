@@ -1,0 +1,97 @@
+{
+  "weapon_greataxe": {
+    "id": "weapon_greataxe",
+    "name": "Greataxe",
+    "type": "weapon",
+    "category": "martial",
+    "damage": { "dice": "1d12", "type": "slashing" },
+    "properties": ["heavy", "two-handed"],
+    "weight": 7
+  },
+  "weapon_handaxe": {
+    "id": "weapon_handaxe",
+    "name": "Handaxe",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d6", "type": "slashing" },
+    "properties": ["light", "thrown"],
+    "range": { "normal": 20, "max": 60 },
+    "weight": 2
+  },
+  "weapon_javelin": {
+    "id": "weapon_javelin",
+    "name": "Javelin",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d6", "type": "piercing" },
+    "properties": ["thrown"],
+    "range": { "normal": 30, "max": 120 },
+    "weight": 2
+  },
+  "weapon_dagger": {
+    "id": "weapon_dagger",
+    "name": "Dagger",
+    "type": "weapon",
+    "category": "simple",
+    "damage": { "dice": "1d4", "type": "piercing" },
+    "properties": ["light", "finesse", "thrown"],
+    "range": { "normal": 20, "max": 60 }
+  },
+  "weapon_rapier": {
+    "id": "weapon_rapier",
+    "name": "Rapier",
+    "type": "weapon",
+    "category": "martial",
+    "damage": { "dice": "1d8", "type": "piercing" },
+    "properties": ["finesse"]
+  },
+
+  "armor_leather": {
+    "id": "armor_leather",
+    "name": "Leather Armor",
+    "type": "armor",
+    "category": "light",
+    "ac": 11,
+    "dexBonus": true
+  },
+  "armor_chain_mail": {
+    "id": "armor_chain_mail",
+    "name": "Chain Mail",
+    "type": "armor",
+    "category": "heavy",
+    "ac": 16,
+    "dexBonus": false,
+    "strRequirement": 13,
+    "stealthDisadvantage": true
+  },
+
+  "shield_basic": {
+    "id": "shield_basic",
+    "name": "Shield",
+    "type": "armor",
+    "category": "shield",
+    "acBonus": 2
+  },
+
+  "pack_explorer": {
+    "id": "pack_explorer",
+    "name": "Explorer's Pack",
+    "type": "gear"
+  },
+  "pack_dungeoneer": {
+    "id": "pack_dungeoneer",
+    "name": "Dungeoneer's Pack",
+    "type": "gear"
+  },
+
+  "tool_lute": {
+    "id": "tool_lute",
+    "name": "Lute",
+    "type": "tool"
+  },
+  "tool_thieves_tools": {
+    "id": "tool_thieves_tools",
+    "name": "Thieves' Tools",
+    "type": "tool"
+  }
+}

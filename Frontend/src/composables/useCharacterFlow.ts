@@ -2,8 +2,15 @@ import { ref, computed } from "vue";
 import RACES from "../mockup/race.json";
 import CLASSES from "../mockup/classes.json";
 import ALIGNMENTS from "../mockup/alignments.json";
+import ITEMS from "../mockup/items.json";
 
-type Step = "race" | "subrace" | "classes" | "subclass" | "alignment";
+type Step =
+  | "race"
+  | "subrace"
+  | "classes"
+  | "subclass"
+  | "alignment"
+  | "startitem";
 
 export function useCharacterFlow() {
   const step = ref<Step>("race");
@@ -13,16 +20,21 @@ export function useCharacterFlow() {
   const selectedSubraceKey = ref<string | null>(null);
   const selectedClassKey = ref<string | null>(null);
   const selectedSubclassKey = ref<string | null>(null);
-  const selectedAlignmentKey = ref<string | null>(null); // ✅ เพิ่ม
+  const selectedAlignmentKey = ref<string | null>(null);
+
+  // 🔥 NEW
+  const selectedLoadoutKey = ref<string | null>(null);
 
   // ===== DATA =====
   const raceData = RACES as Record<string, any>;
   const classData = CLASSES as Record<string, any>;
   const alignmentData = ALIGNMENTS as string[];
+  const itemData = ITEMS as Record<string, any>;
 
   // ===== LIST =====
   const raceList = computed(() => Object.entries(raceData));
   const classList = computed(() => Object.entries(classData));
+
   const alignmentList = computed<[string, any][]>(() =>
     alignmentData.map((name) => [name, {}])
   );
@@ -36,7 +48,7 @@ export function useCharacterFlow() {
     selectedClassKey.value ? classData[selectedClassKey.value] : null
   );
 
-  const selectedAlignment = computed(() => selectedAlignmentKey.value); // ✅ fix
+  const selectedAlignment = computed(() => selectedAlignmentKey.value);
 
   // ===== SUB LIST =====
   const subraceList = computed(() => {
@@ -75,6 +87,22 @@ export function useCharacterFlow() {
     return Object.entries(sub) as [string, any][];
   });
 
+  // ===== 🔥 STARTING LOADOUT =====
+  const startingLoadoutList = computed<[string, any][]>(() => {
+    if (!selectedClass.value) return [];
+
+    const loadout = selectedClass.value.base?.startingLoadout;
+
+    if (!loadout) return [];
+
+    return Object.entries(loadout).map(([key, itemIds]) => [
+      key,
+      {
+        items: itemIds.map((id: string) => itemData[id] || { id }),
+      },
+    ]);
+  });
+
   // ===== SELECT FUNCTIONS =====
   function selectRace(key: string) {
     selectedRaceKey.value = key;
@@ -88,6 +116,7 @@ export function useCharacterFlow() {
   function selectClass(key: string) {
     selectedClassKey.value = key;
     selectedSubclassKey.value = null;
+    selectedLoadoutKey.value = null; // reset
   }
 
   function selectSubclass(key: string) {
@@ -98,40 +127,49 @@ export function useCharacterFlow() {
     selectedAlignmentKey.value = key;
   }
 
+  function selectLoadout(key: string) {
+    selectedLoadoutKey.value = key;
+  }
+
   // ===== NEXT =====
   function next() {
-    // RACE → SUBRACE
     if (step.value === "race") {
       if (!selectedRace.value) return;
       step.value = "subrace";
       return;
     }
 
-    // SUBRACE → CLASSES
     if (step.value === "subrace") {
       if (subraceList.value.length > 0 && !selectedSubraceKey.value) return;
       step.value = "classes";
       return;
     }
 
-    // CLASSES → SUBCLASS
     if (step.value === "classes") {
       if (!selectedClass.value) return;
       step.value = "subclass";
       return;
     }
 
-    // SUBCLASS → ALIGNMENT
     if (step.value === "subclass") {
       if (subClassList.value.length > 0 && !selectedSubclassKey.value) return;
-      step.value = "alignment"; // ✅ fix สำคัญ
+      step.value = "alignment";
       return;
     }
 
-    // ALIGNMENT → END
     if (step.value === "alignment") {
       if (!selectedAlignment.value) return;
-      return; // ยังไม่มี summary
+      step.value = "startitem"; // 🔥 ไป step ใหม่
+      return;
+    }
+
+    if (step.value === "startitem") {
+      if (startingLoadoutList.value.length > 0 && !selectedLoadoutKey.value) {
+        return;
+      }
+
+      // 🔥 future: summary
+      return;
     }
   }
 
@@ -143,7 +181,7 @@ export function useCharacterFlow() {
     }
 
     if (step.value === "classes") {
-      step.value = "subrace"; // ✅ กลับเสมอ
+      step.value = "subrace";
       return;
     }
 
@@ -156,9 +194,13 @@ export function useCharacterFlow() {
       step.value = "subclass";
       return;
     }
+
+    if (step.value === "startitem") {
+      step.value = "alignment";
+      return;
+    }
   }
 
-  // ===== RETURN =====
   return {
     step,
 
@@ -178,11 +220,15 @@ export function useCharacterFlow() {
     selectedAlignmentKey,
     selectedAlignment,
 
+    startingLoadoutList,
+    selectedLoadoutKey,
+
     selectRace,
     selectSubrace,
     selectClass,
     selectSubclass,
     selectAlignment,
+    selectLoadout,
 
     next,
     back,
