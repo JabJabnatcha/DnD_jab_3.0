@@ -13,7 +13,8 @@ type Step =
   | "classes"
   | "subclass"
   | "startitem"
-  | "alignment";
+  | "alignment"
+  | "profile"; // ✅ ADD
 
 export function useCharacterFlow() {
   const step = ref<Step>("race");
@@ -26,6 +27,16 @@ export function useCharacterFlow() {
   const selectedAlignmentKey = ref<string | null>(null);
 
   const selectedLoadout = ref<Record<string, string>>({});
+
+  // ===== 🆕 PROFILE STATE =====
+  const profile = ref({
+    age: 0,
+    height: "",
+    weight: "",
+    eyes: "",
+    skin: "",
+    hair: "",
+  });
 
   // ===== DATA =====
   const raceData = RACES as Record<string, any>;
@@ -70,42 +81,35 @@ export function useCharacterFlow() {
       : Object.entries(sub);
   });
 
-  // ===== ✅ STARTING LOADOUT (FIXED) =====
+  // ===== LOADOUT =====
   const startingLoadoutList = computed<[string, any][]>(() => {
-    console.log("===== LOADOUT DEBUG =====");
-    console.log("selectedClass:", selectedClass.value);
-
     const loadout =
-      selectedClass.value.base?.startingEquipment ??
-      selectedClass.value.base?.startingLoadout;
+      selectedClass.value?.base?.startingEquipment ??
+      selectedClass.value?.base?.startingLoadout;
 
-    console.log("resolved loadout:", loadout);
+    if (!loadout) return [];
 
-    const result: [string, any][] = Object.entries(loadout).map(
-      ([key, group]: [string, any]) => {
-        const options = (group.options || []).map((opt: any) => {
-          const item = itemData[opt.itemId];
+    return Object.entries(loadout).map(([key, group]: [string, any]) => {
+      const options = (group.options || []).map((opt: any) => {
+        const item = itemData[opt.itemId];
 
-          return {
-            ...opt,
-            item: item || {
-              id: opt.itemId,
-              name: opt.itemId,
-            },
-          };
-        });
-
-        return [
-          key,
-          {
-            choose: group.choose,
-            options,
+        return {
+          ...opt,
+          item: item || {
+            id: opt.itemId,
+            name: opt.itemId,
           },
-        ];
-      }
-    );
-    
-    return result;
+        };
+      });
+
+      return [
+        key,
+        {
+          choose: group.choose,
+          options,
+        },
+      ];
+    });
   });
 
   // ===== ACTIONS =====
@@ -153,25 +157,33 @@ export function useCharacterFlow() {
   return {
     step,
 
+    // race
     raceList,
     selectedRaceKey,
     selectedSubraceKey,
     selectedRace,
     subraceList,
 
+    // class
     classList,
     selectedClassKey,
     selectedSubclassKey,
     selectedClass,
     subClassList,
 
+    // alignment
     alignmentList,
     selectedAlignmentKey,
     selectedAlignment,
 
+    // loadout
     startingLoadoutList,
     selectedLoadout,
 
+    // 🆕 profile
+    profile,
+
+    // actions
     selectRace,
     selectSubrace,
     selectClass,

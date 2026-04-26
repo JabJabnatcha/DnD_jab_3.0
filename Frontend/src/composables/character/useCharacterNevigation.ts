@@ -9,6 +9,9 @@ export function useCharacterNavigation(ctx: {
   startingLoadoutList: any;
   selectedLoadout: any;
   selectedAlignment: any;
+
+  // 🆕 profile (optional future-safe)
+  profile?: any;
 }) {
   function next() {
     const {
@@ -62,6 +65,13 @@ export function useCharacterNavigation(ctx: {
 
     if (step.value === "alignment") {
       if (!selectedAlignment.value) return;
+      step.value = "profile"; // ✅ NEW STEP
+      return;
+    }
+
+    if (step.value === "profile") {
+      // ตอนนี้ยังไม่มี validation
+      // จะข้ามไป finish หรือ summary ในอนาคต
       return;
     }
   }
@@ -91,6 +101,11 @@ export function useCharacterNavigation(ctx: {
 
     if (step.value === "alignment") {
       step.value = "startitem";
+      return;
+    }
+
+    if (step.value === "profile") {
+      step.value = "alignment"; // ✅ NEW BACKFLOW
       return;
     }
   }

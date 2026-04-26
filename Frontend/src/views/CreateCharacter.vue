@@ -7,12 +7,14 @@ import ClassesStep from "../components/ClassesStep.vue";
 import SubclassesStep from "../components/SubClassesStep.vue";
 import AlignmentStep from "../components/AlignmentStep.vue";
 import StartingLoadoutStep from "../components/StartingLoadoutStep.vue";
+import ProfileStep from "../components/ProfileStep.vue"; // ✅ ADD
 
 const flow = useCharacterFlow();
 </script>
 
 <template>
   <div class="p-6">
+
     <!-- RACE -->
     <RaceStep
       v-if="flow.step.value === 'race'"
@@ -41,7 +43,6 @@ const flow = useCharacterFlow();
       @select="flow.selectClass"
       @back="flow.back"
       @next="flow.next"
-
     />
 
     <!-- SUBCLASS -->
@@ -74,5 +75,14 @@ const flow = useCharacterFlow();
       @back="flow.back"
       @next="flow.next"
     />
+
+    <!-- 🆕 PROFILE STEP -->
+    <ProfileStep
+      v-else-if="flow.step.value === 'profile'"
+      v-model="flow.profile.value"
+      @back="flow.back"
+      @next="flow.next"
+    />
+
   </div>
 </template>
